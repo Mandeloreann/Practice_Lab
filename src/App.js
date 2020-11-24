@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { Route } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
-import apiUrl from '../apiConfig'
-import axios from 'axios'
 
 import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from './components/AutoDismissAlert/AutoDismissAlert'
@@ -11,13 +9,15 @@ import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
+import Button from 'react-bootstrap/Button'
 
 class App extends Component {
   constructor () {
     super()
     this.state = {
       user: null,
-      msgAlerts: []
+      msgAlerts: [],
+      buttonRedirect: false
     }
   }
 
@@ -39,13 +39,22 @@ class App extends Component {
   }
 
   handleClick = () => {
-    return axios({
-      url: apiUrl + '/books',
-      method: 'GET'
+    this.setState({
+      buttonRedirect: true
     })
   }
 
   render () {
+    // if (!book) {
+    //   return <p>Loading...</p>
+    // }
+    //
+    // if (deleted) {
+    //   return <Redirect to={
+    //     { pathname: '/', state: { msg: 'Book succesfully deleted!' } }
+    //   } />
+    // }
+
     const { msgAlerts, user } = this.state
 
     return (
@@ -75,7 +84,10 @@ class App extends Component {
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
         </main>
-        <button onClick={handleClick} name='button'>Button</button>
+        <Button color="primary" className="px-4"
+          onClick={this.handleClick}>
+          Button
+        </Button>
       </Fragment>
     )
   }
