@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { Route } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
+import apiUrl from '../apiConfig'
+import axios from 'axios'
 
 import AuthenticatedRoute from './components/AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from './components/AutoDismissAlert/AutoDismissAlert'
@@ -36,6 +38,13 @@ class App extends Component {
     })
   }
 
+  handleClick = () => {
+    return axios({
+      url: apiUrl + '/books',
+      method: 'GET'
+    })
+  }
+
   render () {
     const { msgAlerts, user } = this.state
 
@@ -66,6 +75,7 @@ class App extends Component {
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
         </main>
+        <button onClick={handleClick} name='button'>Button</button>
       </Fragment>
     )
   }
